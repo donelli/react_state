@@ -10,5 +10,6 @@ part 'src/react_value/react_value.dart';
 part 'src/react_value_extensions.dart';
 part 'src/react_value/react_list.dart';
 part 'src/react_value/react_map.dart';
+part 'src/react_value/react_map_values_iterator.dart';
 part 'src/react_value/react_prim.dart';
 part 'src/react_value_helper_extensions.dart';

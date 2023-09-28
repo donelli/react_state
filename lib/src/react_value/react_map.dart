@@ -160,4 +160,7 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
     }
     return this[key] = ifAbsent();
   }
+
+  @override
+  Iterable<V> get values => _ReactMapValuesIterable<K, V>(this);
 }
