@@ -127,4 +127,37 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
       _notify(_value);
     }
   }
+
+  @override
+  V update(K key, V Function(V value) update, {V Function()? ifAbsent}) {
+    if (_value.containsKey(key)) {
+      final updatedValue = update(_value[key] as V);
+
+      if (_value[key] != updatedValue) {
+        _value[key] = updatedValue;
+        _notify(_value);
+      }
+
+      return updatedValue;
+    }
+
+    if (ifAbsent != null) {
+      final newValue = ifAbsent();
+
+      _value[key] = newValue;
+      _notify(_value);
+
+      return newValue;
+    }
+
+    throw ArgumentError.value(key, "key", "Key not in map.");
+  }
+
+  @override
+  V putIfAbsent(K key, V Function() ifAbsent) {
+    if (_value.containsKey(key)) {
+      return _value[key] as V;
+    }
+    return this[key] = ifAbsent();
+  }
 }
