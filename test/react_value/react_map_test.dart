@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:react_state/react_state.dart';
 
+import '../shared.dart';
+
 // TODO: add tests checking if accessing `.length`, `.value`, .. will subscribe to the map changes
 
 void main() {
@@ -13,7 +15,7 @@ void main() {
 
   test('Should only trigger 1 notify when updating a map entry', () {
     final notifyCount = 0.rx;
-    final reactMap = _createAndListenForNotifies<String, int>(notifyCount);
+    final reactMap = createAndListenForNotifies<String, int>(notifyCount);
 
     reactMap['a'] = 1;
 
@@ -25,7 +27,7 @@ void main() {
     'Should trigger multiple notifies when updating a map entries on sequence',
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(notifyCount);
+      final reactMap = createAndListenForNotifies<String, int>(notifyCount);
 
       reactMap['a'] = 1;
       reactMap['b'] = 2;
@@ -40,7 +42,7 @@ void main() {
     'Should not trigger notifies if old entry value is equals to the new one on assignment',
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1},
       );
@@ -58,7 +60,7 @@ void main() {
     'Should only trigger 1 notify when cleaning a ReactMap',
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 2, 'c': 3},
       );
@@ -76,7 +78,7 @@ void main() {
     "Should't notify when cleaning a empty map",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(notifyCount);
+      final reactMap = createAndListenForNotifies<String, int>(notifyCount);
 
       reactMap.clear();
 
@@ -90,7 +92,7 @@ void main() {
     'Should Map.addAll only notify once',
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'d': 4},
       );
@@ -110,7 +112,7 @@ void main() {
     "Shouldn't Map.addAll notify if all entries from the new map are already in the ReactMap",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 3, 'c': 2},
       );
@@ -131,7 +133,7 @@ void main() {
     'Should Map.addEntries only notify once',
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'d': 4},
       );
@@ -151,7 +153,7 @@ void main() {
     "Shouldn't Map.addEntries notify if there is no new entry values",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 2, 'b': 3},
       );
@@ -172,7 +174,7 @@ void main() {
     'Should Map.updateAll only notify once',
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 2, 'c': 3},
       );
@@ -190,7 +192,7 @@ void main() {
     "Shouldn't Map.updateAll notify if nothing changed",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 2, 'c': 3},
       );
@@ -210,7 +212,7 @@ void main() {
     'Should Map.remove notify once and actually remove the entry',
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 4},
       );
@@ -227,7 +229,7 @@ void main() {
     "Should Map.remove don't notify if the entry doesn't exists",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1},
       );
@@ -246,7 +248,7 @@ void main() {
     "Should Map.removeWhere only notify once",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 2, 'c': 3},
       );
@@ -262,7 +264,7 @@ void main() {
     "Should't Map.removeWhere notify if no elements where removed",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 2, 'c': 3},
       );
@@ -280,7 +282,7 @@ void main() {
     "Should Map.update trigger once if the value is updated",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 2},
       );
@@ -296,7 +298,7 @@ void main() {
     "Should't Map.update trigger if the new value is the same as the old value",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1, 'b': 2},
       );
@@ -312,7 +314,7 @@ void main() {
     "Should Map.update trigger once if the value is updated using ifAbsent property",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1},
       );
@@ -330,7 +332,7 @@ void main() {
     "Should ReactMap.putIfAbsent trigger once if the value is updated",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1},
       );
@@ -346,7 +348,7 @@ void main() {
     "Should't ReactMap.putIfAbsent trigger a notify if the value is already defined",
     () {
       final notifyCount = 0.rx;
-      final reactMap = _createAndListenForNotifies<String, int>(
+      final reactMap = createAndListenForNotifies<String, int>(
         notifyCount,
         {'a': 1},
       );
@@ -357,13 +359,4 @@ void main() {
       expect(reactMap.length, 1);
     },
   );
-}
-
-ReactMap<K, V> _createAndListenForNotifies<K, V>(
-  ReactPrim<int> notifyCount, [
-  Map<K, V>? map,
-]) {
-  final reactMap = (map ?? {}).rx;
-  reactMap.addListener((_) => notifyCount.value++);
-  return reactMap;
 }
