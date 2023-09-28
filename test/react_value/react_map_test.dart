@@ -395,4 +395,73 @@ void main() {
       expect(reactMap.length, 1);
     },
   );
+
+  test('Should ReactMap.length add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.length;
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.value add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.value;
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.isEmpty add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.isEmpty;
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.isNotEmpty add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.isNotEmpty;
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.keys add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.keys.toList();
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.entries add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.entries.toList();
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.values add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.values.toList();
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.containsKey add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    final contains = map.containsKey('a');
+    expect(testListener.listenersCount, 1);
+    expect(contains, true);
+  });
+
+  test('Should ReactMap.containsValue add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    final contains = map.containsValue(1);
+    expect(testListener.listenersCount, 1);
+    expect(contains, true);
+  });
+
+  test('Should ReactMap.forEach add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    map.forEach((_, __) {});
+    expect(testListener.listenersCount, 1);
+  });
+
+  test('Should ReactMap.forEach add this ReactValue to listeners', () {
+    final map = createTestMap<String, int>(null, {'a': 1, 'b': 2, 'c': 3});
+    final newMap = map.map((key, value) => MapEntry(key, value * 2));
+    expect(testListener.listenersCount, 1);
+    expect(newMap.length, map.length);
+  });
 }

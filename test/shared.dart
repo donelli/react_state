@@ -13,11 +13,13 @@ class TestReactiveListener<U> extends ReactiveListener {
   }
 }
 
-ReactMap<K, V> createTestMap<K, V>(
-  ReactPrim<int> notifyCount, [
+ReactMap<K, V> createTestMap<K, V>([
+  ReactPrim<int>? notifyCount,
   Map<K, V>? map,
 ]) {
   final reactMap = (map ?? {}).rx;
-  reactMap.addListener((_) => notifyCount.value++);
+  if (notifyCount != null) {
+    reactMap.addListener((_) => notifyCount.value++);
+  }
   return reactMap;
 }
