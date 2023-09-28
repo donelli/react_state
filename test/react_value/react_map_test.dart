@@ -3,9 +3,14 @@ import 'package:react_state/react_state.dart';
 
 import '../shared.dart';
 
-// TODO: add tests checking if accessing `.length`, `.value`, .. will subscribe to the map changes
-
 void main() {
+  final testListener = TestReactiveListener<Map<String, int>>();
+  StateManager.states.add(testListener);
+
+  tearDown(() {
+    testListener.listenersCount = 0;
+  });
+
   test('Should correctly create ReactMap using the rx extension', () {
     final reactMap = <String, int>{}.rx;
     expect(reactMap.runtimeType, ReactMap<String, int>);
@@ -19,6 +24,7 @@ void main() {
 
     reactMap.value = {'a': 1, 'b': 7};
 
+    expect(testListener.listenersCount, 0);
     expect(notifyCount.value, 1);
     expect(reactMap.length, 2);
   });
@@ -31,6 +37,7 @@ void main() {
 
     reactMap['a'] = 1;
 
+    expect(testListener.listenersCount, 0);
     expect(notifyCount.value, 1);
     expect(reactMap.length, 1);
   });
@@ -45,6 +52,7 @@ void main() {
       reactMap['b'] = 2;
       reactMap['c'] = 3;
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 3);
       expect(reactMap.length, 3);
     },
@@ -61,6 +69,7 @@ void main() {
 
       reactMap['a'] = 1;
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 1);
     },
@@ -77,10 +86,9 @@ void main() {
         {'a': 1, 'b': 2, 'c': 3},
       );
 
-      expect(reactMap.length, 3);
-
       reactMap.clear();
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 0);
     },
@@ -94,6 +102,7 @@ void main() {
 
       reactMap.clear();
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
     },
   );
@@ -115,6 +124,7 @@ void main() {
         'c': 2,
       });
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 4);
     },
@@ -134,6 +144,7 @@ void main() {
         'b': 3,
       });
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 3);
     },
@@ -156,6 +167,7 @@ void main() {
         const MapEntry('c', 2),
       ]);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 4);
     },
@@ -175,6 +187,7 @@ void main() {
         const MapEntry('b', 3),
       ]);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 2);
     },
@@ -195,6 +208,7 @@ void main() {
         return value * 2;
       });
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 3);
     },
@@ -213,6 +227,7 @@ void main() {
         return value;
       });
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 3);
     },
@@ -231,6 +246,7 @@ void main() {
 
       reactMap.remove('a');
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 1);
       expect(reactMap.keys.first, 'b');
@@ -248,6 +264,7 @@ void main() {
 
       reactMap.remove('b');
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 1);
       expect(reactMap.keys.first, 'a');
@@ -267,6 +284,7 @@ void main() {
 
       reactMap.removeWhere((key, value) => true);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 0);
     },
@@ -283,6 +301,7 @@ void main() {
 
       reactMap.removeWhere((key, value) => key == 'f');
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 3);
     },
@@ -301,6 +320,7 @@ void main() {
 
       reactMap.update('a', (value) => value + 1);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 2);
     },
@@ -317,6 +337,7 @@ void main() {
 
       reactMap.update('a', (value) => value);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 2);
     },
@@ -333,6 +354,7 @@ void main() {
 
       reactMap.update('b', (value) => value, ifAbsent: () => 2);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 2);
     },
@@ -351,6 +373,7 @@ void main() {
 
       reactMap.putIfAbsent('b', () => 2);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 1);
       expect(reactMap.length, 2);
     },
@@ -367,6 +390,7 @@ void main() {
 
       reactMap.putIfAbsent('a', () => 2);
 
+      expect(testListener.listenersCount, 0);
       expect(notifyCount.value, 0);
       expect(reactMap.length, 1);
     },
