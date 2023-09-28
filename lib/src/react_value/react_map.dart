@@ -170,5 +170,12 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
   }
 
   @override
+  void forEach(void Function(K key, V value) action) {
+    for (K key in keys) {
+      action(key, _value[key] as V);
+    }
+  }
+
+  @override
   Iterable<V> get values => _ReactMapValuesIterable<K, V>(this);
 }
