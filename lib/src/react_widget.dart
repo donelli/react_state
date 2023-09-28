@@ -25,13 +25,11 @@ class _ReactState extends State<React> {
   }
 
   void refresh<T>(T _) {
-    print('Refresh');
     setState(() {});
   }
 
   @override
   void dispose() {
-    print('Dispose');
     for (final rx in _values.keys) {
       rx.removeListener(refresh);
     }
