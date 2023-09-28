@@ -162,5 +162,13 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
   }
 
   @override
+  bool containsValue(Object? value) {
+    for (K key in keys) {
+      if (_value[key] == value) return true;
+    }
+    return false;
+  }
+
+  @override
   Iterable<V> get values => _ReactMapValuesIterable<K, V>(this);
 }
