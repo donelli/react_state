@@ -65,7 +65,7 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
     var hasChanged = false;
 
     for (var key in _value.keys) {
-      final newValue = update(key, this[key] as V);
+      final newValue = update(key, _value[key] as V);
 
       if (_value[key] == newValue) {
         continue;
@@ -76,7 +76,7 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
     }
 
     if (hasChanged) {
-      _notify(value);
+      _notify(_value);
     }
   }
 
