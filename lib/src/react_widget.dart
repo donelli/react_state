@@ -12,9 +12,10 @@ class React extends StatefulWidget {
   State<React> createState() => _ReactState();
 }
 
-class _ReactState extends State<React> {
+class _ReactState extends State<React> implements ReactiveListener {
   final _values = <ReactValue<dynamic>, void>{};
 
+  @override
   void addRx<T>(ReactValue<T> rx) {
     if (_values.containsKey(rx)) {
       return;
