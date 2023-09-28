@@ -29,7 +29,7 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
 
   @pragma("vm:prefer-inline")
   @override
-  Iterable<K> get keys => _value.keys;
+  Iterable<K> get keys => value.keys;
 
   @override
   V? remove(Object? key) {
@@ -40,5 +40,91 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
     }
 
     return removedValue;
+  }
+
+  @override
+  void addAll(Map<K, V> other) {
+    var hasChanged = false;
+
+    other.forEach((K key, V value) {
+      if (_value[key] == value) {
+        return;
+      }
+
+      _value[key] = value;
+      hasChanged = true;
+    });
+
+    if (hasChanged) {
+      _notify(_value);
+    }
+  }
+
+  @override
+  void updateAll(V Function(K key, V value) update) {
+    var hasChanged = false;
+
+    for (var key in _value.keys) {
+      final newValue = update(key, this[key] as V);
+
+      if (_value[key] == newValue) {
+        continue;
+      }
+
+      _value[key] = newValue;
+      hasChanged = true;
+    }
+
+    if (hasChanged) {
+      _notify(value);
+    }
+  }
+
+  @override
+  Iterable<MapEntry<K, V>> get entries {
+    return keys.map((K key) => MapEntry<K, V>(key, _value[key] as V));
+  }
+
+  @override
+  Map<K2, V2> map<K2, V2>(MapEntry<K2, V2> Function(K key, V value) transform) {
+    var result = <K2, V2>{};
+    for (var key in keys) {
+      var entry = transform(key, _value[key] as V);
+      result[entry.key] = entry.value;
+    }
+    return result;
+  }
+
+  @override
+  void addEntries(Iterable<MapEntry<K, V>> newEntries) {
+    bool hasChanged = false;
+
+    for (var entry in newEntries) {
+      if (_value[entry.key] == entry.value) {
+        continue;
+      }
+
+      _value[entry.key] = entry.value;
+      hasChanged = true;
+    }
+
+    if (hasChanged) {
+      _notify(_value);
+    }
+  }
+
+  @override
+  void removeWhere(bool Function(K key, V value) test) {
+    var keysToRemove = <K>[];
+    for (var key in _value.keys) {
+      if (test(key, _value[key] as V)) keysToRemove.add(key);
+    }
+    for (var key in keysToRemove) {
+      _value.remove(key);
+    }
+
+    if (keysToRemove.isNotEmpty) {
+      _notify(_value);
+    }
   }
 }
