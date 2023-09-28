@@ -14,7 +14,9 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
   int get length => value.length;
 
   @override
-  set length(int len) {}
+  set length(int len) {
+    _value.length = len;
+  }
 
   @pragma("vm:prefer-inline")
   @override
@@ -57,6 +59,28 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
     if (length == 0) throw _IterableElementError.noElement();
     if (_value.length > 1) throw _IterableElementError.tooMany();
     return _value[0];
+  }
+
+  @override
+  void add(dynamic element) {
+    _value.add(element);
+    _notify(_value);
+  }
+
+  @override
+  void addAll(Iterable<dynamic> iterable) {
+    int i = _value.length;
+    final initialLength = i;
+
+    for (final element in iterable) {
+      assert(_value.length == i || (throw ConcurrentModificationError(this)));
+      _value.add(element);
+      i++;
+    }
+
+    if (i != initialLength) {
+      _notify(_value);
+    }
   }
 }
 

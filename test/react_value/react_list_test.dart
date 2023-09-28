@@ -220,11 +220,53 @@ void main() {
     },
   );
 
+  test(
+    "Should ReactList.add work and notify listeners",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount);
+
+      reactList.add(1);
+      reactList.add(2);
+
+      expect(notifyCount.value, 2);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.value, [1, 2]);
+    },
+  );
+
+  test(
+    "Should ReactList.addAll work and notify listeners only once",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount);
+      final otherList = [2, 4, 6, 8, 10];
+
+      reactList.addAll(otherList);
+
+      expect(notifyCount.value, 1);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.value, otherList);
+    },
+  );
+
+  test(
+    "Should't ReactList.addAll notify listeners if iterable is empty",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount);
+
+      reactList.addAll([]);
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 0);
+    },
+  );
+
   // TODO: list.iterator
   // TODO: list.reversed
   // TODO: list.value
-  // TODO: list.add(element)
-  // TODO: list.addAll()
   // TODO: list.any((element) => false)
   // TODO: list.asMap()
   // TODO: list.batch((list) { })
