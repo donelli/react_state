@@ -180,9 +180,48 @@ void main() {
     },
   );
 
+  test(
+    "Should ReactList.single work and only notify once",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount, [2]);
+
+      final singleItem = reactList.single;
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 1);
+      expect(singleItem, 2);
+    },
+  );
+
+  test(
+    "Should ReactList.single throws if there is more then one element",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount, [2, 2]);
+
+      expect(() => reactList.single, throwsA(isA<StateError>()));
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 1);
+    },
+  );
+
+  test(
+    "Should ReactList.single throws if there is no element",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount);
+
+      expect(() => reactList.single, throwsA(isA<StateError>()));
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 1);
+    },
+  );
+
   // TODO: list.iterator
   // TODO: list.reversed
-  // TODO: list.single
   // TODO: list.value
   // TODO: list.add(element)
   // TODO: list.addAll()

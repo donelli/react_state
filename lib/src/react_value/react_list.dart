@@ -32,7 +32,7 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
 
   @override
   T get first {
-    if (length == 0) throw StateError("No element");
+    if (length == 0) _IterableElementError.noElement();
     return _value[0];
   }
 
@@ -43,7 +43,7 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
 
   @override
   T get last {
-    if (length == 0) throw StateError("No element");
+    if (length == 0) _IterableElementError.noElement();
     return _value[_value.length - 1];
   }
 
@@ -51,4 +51,24 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
     if (length == 0) return null;
     return _value[_value.length - 1];
   }
+
+  @override
+  T get single {
+    if (length == 0) throw _IterableElementError.noElement();
+    if (_value.length > 1) throw _IterableElementError.tooMany();
+    return _value[0];
+  }
+}
+
+abstract class _IterableElementError {
+  const _IterableElementError._();
+
+  /// Error thrown thrown by, e.g., [Iterable.first] when there is no result.
+  static StateError noElement() => StateError("No element");
+
+  /// Error thrown by, e.g., [Iterable.single] if there are too many results.
+  static StateError tooMany() => StateError("Too many elements");
+
+  /// Error thrown by, e.g., [List.setRange] if there are too few elements.
+  // static StateError tooFew() => StateError("Too few elements");
 }
