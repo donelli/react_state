@@ -22,7 +22,22 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
 
   @override
   void operator []=(int index, value) {
+    if (_value[index] == value) {
+      return;
+    }
+
     _value[index] = value;
     _notify(_value);
+  }
+
+  @override
+  T get first {
+    if (length == 0) throw StateError("No element");
+    return _value[0];
+  }
+
+  T? get firstOrNull {
+    if (length == 0) return null;
+    return _value[0];
   }
 }

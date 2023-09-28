@@ -23,3 +23,14 @@ ReactMap<K, V> createTestMap<K, V>([
   }
   return reactMap;
 }
+
+ReactList<T> createTestList<T>([
+  ReactPrim<int>? notifyCount,
+  List<T>? list,
+]) {
+  final reactList = (list ?? []).rx;
+  if (notifyCount != null) {
+    reactList.addListener((_) => notifyCount.value++);
+  }
+  return reactList;
+}
