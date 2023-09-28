@@ -10,4 +10,13 @@ abstract class ReactValue<T> extends StateChangeNotifier<T> {
     StateManager.addRx(this);
     return _value;
   }
+
+  set value(T value) {
+    if (_value == value) {
+      return;
+    }
+
+    _value = value;
+    _notify(_value);
+  }
 }

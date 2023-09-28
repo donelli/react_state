@@ -11,6 +11,18 @@ void main() {
     expect(reactMap.runtimeType, ReactMap<String, int>);
   });
 
+  // ReactMap.value=
+
+  test('Should trigger notify when updating the entire map', () {
+    final notifyCount = 0.rx;
+    final reactMap = createAndListenForNotifies<String, int>(notifyCount);
+
+    reactMap.value = {'a': 1, 'b': 7};
+
+    expect(notifyCount.value, 1);
+    expect(reactMap.length, 2);
+  });
+
   // ReactMap.[]=
 
   test('Should only trigger 1 notify when updating a map entry', () {
