@@ -40,4 +40,15 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
     if (length == 0) return null;
     return _value[0];
   }
+
+  @override
+  T get last {
+    if (length == 0) throw StateError("No element");
+    return _value[_value.length - 1];
+  }
+
+  T? get lastOrNull {
+    if (length == 0) return null;
+    return _value[_value.length - 1];
+  }
 }

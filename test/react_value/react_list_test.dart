@@ -141,8 +141,46 @@ void main() {
     },
   );
 
+  test("Should ReactList.last work and only notify once", () {
+    final notifyCount = 0.rx;
+    final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
+
+    final lastItem = reactList.last;
+
+    expect(notifyCount.value, 0);
+    expect(testListener.listenersCount, 1);
+    expect(lastItem, 3);
+  });
+
+  test(
+    "Should ReactList.lastOrNull work and only notify once if there is elements",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
+
+      final firstItem = reactList.lastOrNull;
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 1);
+      expect(firstItem, 3);
+    },
+  );
+
+  test(
+    "Should ReactList.lastOrNull work and only notify once if there isn't a element",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount);
+
+      final firstItem = reactList.lastOrNull;
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 1);
+      expect(firstItem, null);
+    },
+  );
+
   // TODO: list.iterator
-  // TODO: list.last
   // TODO: list.reversed
   // TODO: list.single
   // TODO: list.value
