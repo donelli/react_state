@@ -1,6 +1,6 @@
 import 'package:react_state/react_state.dart';
 
-ReactMap<K, V> createAndListenForNotifies<K, V>(
+ReactMap<K, V> createTestMap<K, V>(
   ReactPrim<int> notifyCount, [
   Map<K, V>? map,
 ]) {
