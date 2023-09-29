@@ -121,7 +121,7 @@ void main() {
     value.value.name = 'Edu2';
 
     expect(testListener.listenersCount, 1);
-    expect(notifyCount, 1);
+    expect(notifyCount, 0);
   });
 }
 
