@@ -15,7 +15,7 @@ void main() {
     StateManager.states.add(testListener);
   }
 
-  test('Should correctly handle ReactValues of Strings', () {
+  test('Should correctly handle ReactObject of Strings', () {
     setupListener<String>();
     var notifyCount = 0;
     final value = 'Test'.rx;
@@ -31,7 +31,7 @@ void main() {
     expect(value.value, 'Updated');
   });
 
-  test('Should correctly handle ReactValues of bool', () {
+  test('Should correctly handle ReactObject of bool', () {
     setupListener<bool>();
     var notifyCount = 0;
     final value = false.rx;
@@ -47,7 +47,7 @@ void main() {
     expect(value.value, true);
   });
 
-  test('Should correctly handle ReactValues of int', () {
+  test('Should correctly handle ReactObject of int', () {
     setupListener<int>();
     var notifyCount = 0;
     final value = 123.rx;
@@ -63,7 +63,7 @@ void main() {
     expect(value.value, 999);
   });
 
-  test('Should correctly handle ReactValues of num', () {
+  test('Should correctly handle ReactObject of num', () {
     setupListener<num>();
     var notifyCount = 0;
     // ignore: unnecessary_cast
@@ -80,7 +80,7 @@ void main() {
     expect(value.value, 12);
   });
 
-  test('Should correctly handle ReactValues of double', () {
+  test('Should correctly handle ReactObject of double', () {
     setupListener<double>();
     var notifyCount = 0;
     final value = (55.42).rx;
@@ -96,7 +96,7 @@ void main() {
     expect(value.value, 56.42);
   });
 
-  test('Should correctly handle ReactValues of double', () {
+  test('Should correctly handle ReactObject of double', () {
     setupListener<TestEnum>();
     var notifyCount = 0;
     final value = TestEnum.two.rx;
@@ -111,6 +111,24 @@ void main() {
     expect(notifyCount, 1);
     expect(value.value, TestEnum.three);
   });
+
+  test('Should correctly handle ReactObject of Objects', () {
+    setupListener<ClassA>();
+    var notifyCount = 0;
+    final value = ClassA('Edu').rx;
+    value.addListener((_) => notifyCount++);
+
+    value.value.name = 'Edu2';
+
+    expect(testListener.listenersCount, 1);
+    expect(notifyCount, 1);
+  });
 }
 
 enum TestEnum { one, two, three }
+
+class ClassA {
+  ClassA(this.name);
+
+  String name;
+}
