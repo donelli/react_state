@@ -30,12 +30,12 @@ class _ReactState extends State<React> implements ReactiveListener {
   }
 
   @override
-  void dispose() {
+  void deactivate() {
     for (final rx in _values.keys) {
       rx.removeListener(refresh);
     }
     _values.clear();
-    super.dispose();
+    super.deactivate();
   }
 
   @override
