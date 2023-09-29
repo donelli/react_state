@@ -87,6 +87,18 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
       _notify(_value);
     }
   }
+
+  @override
+  bool any(bool Function(T element) test) {
+    int length = this.length;
+    for (int i = 0; i < length; i++) {
+      if (test(_value[i])) return true;
+      if (length != _value.length) {
+        throw ConcurrentModificationError(this);
+      }
+    }
+    return false;
+  }
 }
 
 abstract class _IterableElementError {

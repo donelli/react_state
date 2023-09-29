@@ -70,11 +70,10 @@ void main() {
 
     expect(notifyCount.value, 1);
     expect(testListener.listenersCount, 0);
-    expect(reactList.length, 2);
     expect(reactList, [1, 2]);
   });
 
-  test("Should ReactList.first work and only notify once", () {
+  test("Should ReactList.first work and subscribe to listeners", () {
     final notifyCount = 0.rx;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
@@ -86,7 +85,7 @@ void main() {
   });
 
   test(
-    "Should ReactList.firstOrNull work and only notify once if there is elements",
+    "Should ReactList.firstOrNull work and subscribe to listeners if there is elements",
     () {
       final notifyCount = 0.rx;
       final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
@@ -100,7 +99,7 @@ void main() {
   );
 
   test(
-    "Should ReactList.firstOrNull work and only notify once if there isn't a element",
+    "Should ReactList.firstOrNull work and subscribe to listeners if there isn't a element",
     () {
       final notifyCount = 0.rx;
       final reactList = createTestList<int>(notifyCount);
@@ -114,7 +113,7 @@ void main() {
   );
 
   test(
-    "Should ReactList.isEmpty work and only notify once",
+    "Should ReactList.isEmpty work and subscribe to listeners",
     () {
       final notifyCount = 0.rx;
       final reactList = createTestList<int>(notifyCount);
@@ -128,7 +127,7 @@ void main() {
   );
 
   test(
-    "Should ReactList.isNotEmpty work and only notify once",
+    "Should ReactList.isNotEmpty work and subscribe to listeners",
     () {
       final notifyCount = 0.rx;
       final reactList = createTestList<int>(notifyCount, [1]);
@@ -141,7 +140,7 @@ void main() {
     },
   );
 
-  test("Should ReactList.last work and only notify once", () {
+  test("Should ReactList.last work and subscribe to listeners", () {
     final notifyCount = 0.rx;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
@@ -153,7 +152,7 @@ void main() {
   });
 
   test(
-    "Should ReactList.lastOrNull work and only notify once if there is elements",
+    "Should ReactList.lastOrNull work and subscribe to listeners if there is elements",
     () {
       final notifyCount = 0.rx;
       final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
@@ -167,7 +166,7 @@ void main() {
   );
 
   test(
-    "Should ReactList.lastOrNull work and only notify once if there isn't a element",
+    "Should ReactList.lastOrNull work and subscribe to listeners if there isn't a element",
     () {
       final notifyCount = 0.rx;
       final reactList = createTestList<int>(notifyCount);
@@ -181,7 +180,7 @@ void main() {
   );
 
   test(
-    "Should ReactList.single work and only notify once",
+    "Should ReactList.single work and subscribe to listeners",
     () {
       final notifyCount = 0.rx;
       final reactList = createTestList<int>(notifyCount, [2]);
@@ -292,10 +291,37 @@ void main() {
     },
   );
 
+  test(
+    "Should ReactList.any work and subscribe to listeners",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount, [1, 2, 3, 4]);
+
+      final hasThree = reactList.any((value) => value == 3);
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 1);
+      expect(hasThree, true);
+    },
+  );
+
+  test(
+    "Should ReactList.any work and subscribe to listeners even if element is not founded",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount, [1, 2, 3, 4]);
+
+      final hasThree = reactList.any((value) => value == 9);
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 1);
+      expect(hasThree, false);
+    },
+  );
+
   // TODO: list.iterator
   // TODO: list.reversed
   // TODO: list.value
-  // TODO: list.any((element) => false)
   // TODO: list.asMap()
   // TODO: list.batch((list) { })
   // TODO: list.contains
