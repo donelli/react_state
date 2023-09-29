@@ -14,7 +14,7 @@ class TestReactiveListener<U> extends ReactiveListener {
 }
 
 ReactMap<K, V> createTestMap<K, V>([
-  ReactPrim<int>? notifyCount,
+  ReactObject<int>? notifyCount,
   Map<K, V>? map,
 ]) {
   final reactMap = (map ?? {}).rx;
@@ -25,7 +25,7 @@ ReactMap<K, V> createTestMap<K, V>([
 }
 
 ReactList<T> createTestList<T>([
-  ReactPrim<int>? notifyCount,
+  ReactObject<int>? notifyCount,
   List<T>? list,
 ]) {
   final reactList = (list ?? []).rx;

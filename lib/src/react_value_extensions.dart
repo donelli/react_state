@@ -4,32 +4,37 @@ part of '../react_state.dart';
 
 extension ReactPrimInt on int {
   @pragma("vm:prefer-inline")
-  ReactPrim<int> get rx => ReactPrim(this);
+  ReactObject<int> get rx => ReactObject(this);
 }
 
 extension ReactPrimDouble on double {
   @pragma("vm:prefer-inline")
-  ReactPrim<double> get rx => ReactPrim(this);
+  ReactObject<double> get rx => ReactObject(this);
 }
 
 extension ReactPrimNum on num {
   @pragma("vm:prefer-inline")
-  ReactPrim<num> get rx => ReactPrim(this);
+  ReactObject<num> get rx => ReactObject(this);
 }
 
 extension ReactPrimBool on bool {
   @pragma("vm:prefer-inline")
-  ReactPrim<bool> get rx => ReactPrim(this);
+  ReactObject<bool> get rx => ReactObject(this);
 }
 
 extension ReactPrimString on String {
   @pragma("vm:prefer-inline")
-  ReactPrim<String> get rx => ReactPrim(this);
+  ReactObject<String> get rx => ReactObject(this);
 }
 
 extension ReactPrimEnum<T extends Enum> on T {
   @pragma("vm:prefer-inline")
-  ReactPrim<T> get rx => ReactPrim(this);
+  ReactObject<T> get rx => ReactObject(this);
+}
+
+extension ReactPrimObject<T> on T {
+  @pragma("vm:prefer-inline")
+  ReactObject<T> get rx => ReactObject(this);
 }
 
 // List
