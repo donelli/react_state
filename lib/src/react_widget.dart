@@ -21,26 +21,34 @@ class _ReactState extends State<React> implements ReactiveListener {
       return;
     }
 
-    rx.addListener(refresh);
+    rx.addListener(_refresh);
     _values[rx] = null;
   }
 
-  void refresh<T>(T _) {
+  void _refresh<T>(T _) {
     setState(() {});
   }
 
   @override
   void deactivate() {
+    _removeListeners();
+    super.deactivate();
+  }
+
+  void _removeListeners() {
     for (final rx in _values.keys) {
-      rx.removeListener(refresh);
+      rx.removeListener(_refresh);
     }
     _values.clear();
-    super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
+    // FIXME: for now, this is executed every time, and it should.
+    // But we can make this smarter and don't remove listeners if nothing has changed!
+    _removeListeners();
     StateManager.states.add(this);
+
     final component = widget.builder();
 
     if (StateManager.states.last == this) {
