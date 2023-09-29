@@ -15,7 +15,12 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
 
   @override
   set length(int len) {
+    if (_value.length == len) {
+      return;
+    }
+
     _value.length = len;
+    _notify(_value);
   }
 
   @pragma("vm:prefer-inline")

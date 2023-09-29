@@ -264,13 +264,40 @@ void main() {
     },
   );
 
+  test(
+    "Should ReactList.clear work and notify listeners only once",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount, [1, 2]);
+
+      reactList.clear();
+
+      expect(notifyCount.value, 1);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 0);
+    },
+  );
+
+  test(
+    "Should't ReactList.clear notify listeners if it's already empty",
+    () {
+      final notifyCount = 0.rx;
+      final reactList = createTestList<int>(notifyCount);
+
+      reactList.clear();
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 0);
+    },
+  );
+
   // TODO: list.iterator
   // TODO: list.reversed
   // TODO: list.value
   // TODO: list.any((element) => false)
   // TODO: list.asMap()
   // TODO: list.batch((list) { })
-  // TODO: list.clear
   // TODO: list.contains
   // TODO: list.elementAt(index)
   // TODO: list.every
