@@ -31,6 +31,15 @@ class ReactMap<K, V> extends ReactValue<Map<K, V>> with MapMixin<K, V> {
   @override
   Iterable<K> get keys => value.keys;
 
+  set value(Map<K, V> value) {
+    if (_value == value) {
+      return;
+    }
+
+    _value = value;
+    _notify(_value);
+  }
+
   @override
   V? remove(Object? key) {
     final removedValue = _value.remove(key);

@@ -11,12 +11,5 @@ abstract class ReactValue<T> extends StateChangeNotifier<T> {
     return _value;
   }
 
-  set value(T value) {
-    if (_value == value) {
-      return;
-    }
-
-    _value = value;
-    _notify(_value);
-  }
+  T get valueWithoutSubscription => _value;
 }

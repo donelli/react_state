@@ -13,3 +13,4 @@ part 'src/react_value/react_map.dart';
 part 'src/react_value/react_map_values_iterator.dart';
 part 'src/react_value/react_object.dart';
 part 'src/react_value_helper_extensions.dart';
+part 'src/react_value/react_unmodifiable_object.dart';

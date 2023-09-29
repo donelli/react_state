@@ -1,7 +1,7 @@
 part of '../../react_state.dart';
 
 class ReactList<T> extends ReactValue<List<T>> with ListMixin {
-  ReactList(List<T> value) : super(value);
+  ReactList(List<T>? value) : super(value ?? []);
 
   @pragma("vm:prefer-inline")
   void batch(void Function(List<T> list) callback) {
@@ -34,6 +34,15 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
     }
 
     _value[index] = value;
+    _notify(_value);
+  }
+
+  set value(List<T> value) {
+    if (_value == value) {
+      return;
+    }
+
+    _value = value;
     _notify(_value);
   }
 
@@ -98,6 +107,27 @@ class ReactList<T> extends ReactValue<List<T>> with ListMixin {
       }
     }
     return false;
+  }
+
+  void assign(T item) {
+    _value.clear();
+    _value.add(item);
+    _notify(_value);
+  }
+
+  void assignAll(Iterable<T> items) {
+    _value.clear();
+    addAll(items);
+  }
+
+  void replaceOne(T oldValue, T newValue) {
+    final index = _value.indexOf(oldValue);
+    if (index == -1) {
+      throw ArgumentError.value(oldValue, "oldValue", "Not found");
+    }
+
+    _value[index] = newValue;
+    _notify(_value);
   }
 }
 
