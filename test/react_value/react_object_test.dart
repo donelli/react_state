@@ -115,13 +115,24 @@ void main() {
   test('Should correctly handle ReactObject of Objects', () {
     setupListener<ClassA>();
     var notifyCount = 0;
-    final value = ClassA('Edu').rx;
+    final originalClass = ClassA('Edu');
+    final value = originalClass.rx;
     value.addListener((_) => notifyCount++);
 
     value.value.name = 'Edu2';
 
     expect(testListener.listenersCount, 1);
     expect(notifyCount, 0);
+
+    value.value = originalClass;
+
+    expect(testListener.listenersCount, 1);
+    expect(notifyCount, 0);
+
+    value.value = ClassA('Edu3');
+
+    expect(testListener.listenersCount, 1);
+    expect(notifyCount, 1);
   });
 }
 
