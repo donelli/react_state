@@ -2,7 +2,7 @@ part of '../react_state.dart';
 
 // Object
 
-extension ReactObjectExtension<T> on T {
+extension ReactObjectExtension<T extends Object> on T {
   @pragma("vm:prefer-inline")
   ReactObject<T> get rx => ReactObject(this);
 
@@ -12,7 +12,7 @@ extension ReactObjectExtension<T> on T {
 
 extension ReactObjectNullExtension on Null {
   @pragma("vm:prefer-inline")
-  ReactObject<T?> rxNull<T>() => ReactObject(this);
+  ReactObject<T?> rx<T>() => ReactObject(this);
 }
 
 // List
