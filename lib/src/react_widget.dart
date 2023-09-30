@@ -8,6 +8,24 @@ class React extends StatefulWidget {
 
   final Widget Function() builder;
 
+  static ReactUnmodifiableObject<T> computed<T extends Object>(
+    T Function() computeFunction, {
+    bool immediate = false,
+  }) {
+    return ComputedValue<T>.create(
+      computeFunction: computeFunction,
+      immediate: immediate,
+    );
+  }
+
+  static void disposeComputed<T>(ReactUnmodifiableObject<T> value) {
+    if (value is! ComputedValue) {
+      return;
+    }
+
+    (value as ComputedValue)._dispose();
+  }
+
   @override
   State<React> createState() => _ReactState();
 }

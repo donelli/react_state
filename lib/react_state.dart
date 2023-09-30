@@ -2,6 +2,7 @@ library react_state;
 
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 part 'src/state_change_notifier.dart';
 part 'src/react_widget.dart';
@@ -14,3 +15,4 @@ part 'src/react_value/react_map_values_iterator.dart';
 part 'src/react_value/react_object.dart';
 part 'src/react_value_helper_extensions.dart';
 part 'src/react_value/react_unmodifiable_object.dart';
+part 'src/react_computed.dart';
