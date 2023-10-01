@@ -70,6 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const _ComputeExample(),
             const Divider(),
             const _ComplexComputeExample(),
+            const Divider(),
+            const _DebouncedExample(),
           ],
         ),
       ),
@@ -102,7 +104,6 @@ class _ComputeExampleState extends State<_ComputeExample> {
         SizedBox(
           width: 200,
           child: TextFormField(
-            controller: TextEditingController(),
             onChanged: (value) {
               text.value = value;
             },
@@ -190,6 +191,46 @@ class __ComplexComputeExampleState extends State<_ComplexComputeExample> {
         const SizedBox(width: 12),
         React(() {
           return Text('(Runs: ${runs.value})');
+        }),
+      ],
+    );
+  }
+}
+
+class _DebouncedExample extends StatefulWidget {
+  const _DebouncedExample();
+
+  @override
+  State<_DebouncedExample> createState() => _DebouncedExampleState();
+}
+
+class _DebouncedExampleState extends State<_DebouncedExample> {
+  final text = ''.rxDebounced(const Duration(milliseconds: 400));
+  final renders = 0.rx;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 200,
+          child: TextFormField(
+            onChanged: (value) {
+              text.value = value;
+            },
+          ),
+        ),
+        const SizedBox(width: 12),
+        React(() {
+          Future.delayed(const Duration(milliseconds: 1), () {
+            ++renders.value;
+          });
+          return Text(text.value);
+        }),
+        const SizedBox(width: 12),
+        React(() {
+          final renders = this.renders.value;
+          return Text('(Renders: $renders)');
         }),
       ],
     );
