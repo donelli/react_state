@@ -4,15 +4,15 @@ part of '../react_state.dart';
 
 extension ReactObjectExtension<T extends Object> on T {
   @pragma("vm:prefer-inline")
-  ReactObject<T> get rx => ReactObject(this);
+  ReactValue<T> get rx => ReactValue(this);
 
   @pragma("vm:prefer-inline")
-  ReactObject<T?> get rxNull => ReactObject(this);
+  ReactValue<T?> get rxNull => ReactValue(this);
 }
 
 extension ReactObjectNullExtension on Null {
   @pragma("vm:prefer-inline")
-  ReactObject<T?> rx<T>() => ReactObject(this);
+  ReactValue<T?> rx<T>() => ReactValue(this);
 }
 
 // List

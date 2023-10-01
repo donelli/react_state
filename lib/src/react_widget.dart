@@ -31,10 +31,10 @@ class React extends StatefulWidget {
 }
 
 class _ReactState extends State<React> implements ReactiveListener {
-  final _values = <ReactValue<dynamic>, void>{};
+  final _values = <ReactInterface<dynamic>, void>{};
 
   @override
-  void addRx<T>(ReactValue<T> rx) {
+  void addRx<T>(ReactInterface<T> rx) {
     if (_values.containsKey(rx)) {
       return;
     }

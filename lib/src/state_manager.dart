@@ -3,7 +3,7 @@ part of '../react_state.dart';
 class StateManager {
   static final states = <ReactiveListener>[];
 
-  static void addRx<T>(ReactValue<T> value) {
+  static void addRx<T>(ReactInterface<T> value) {
     if (states.isEmpty) {
       return;
     }
@@ -13,5 +13,5 @@ class StateManager {
 }
 
 abstract class ReactiveListener {
-  void addRx<T>(ReactValue<T> rx);
+  void addRx<T>(ReactInterface<T> rx);
 }

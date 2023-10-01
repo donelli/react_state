@@ -76,15 +76,15 @@ class ComputedValue<T> extends ReactUnmodifiableObject<T> {
 class _SimpleReactiveListener extends ReactiveListener {
   _SimpleReactiveListener();
 
-  final values = <ReactValue<dynamic>>[];
+  final values = <ReactInterface<dynamic>>[];
 
   @override
-  void addRx<T>(ReactValue<T> rx) {
+  void addRx<T>(ReactInterface<T> rx) {
     values.add(rx);
   }
 }
 
 class _IgnoreReactiveListener extends ReactiveListener {
   @override
-  void addRx<T>(ReactValue<T> rx) {}
+  void addRx<T>(ReactInterface<T> rx) {}
 }

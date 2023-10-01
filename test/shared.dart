@@ -4,7 +4,7 @@ class TestReactiveListener<U> extends ReactiveListener {
   int listenersCount = 0;
 
   @override
-  void addRx<T>(ReactValue<T> rx) {
+  void addRx<T>(ReactInterface<T> rx) {
     if (T != U) {
       return;
     }
@@ -14,7 +14,7 @@ class TestReactiveListener<U> extends ReactiveListener {
 }
 
 ReactMap<K, V> createTestMap<K, V>([
-  ReactObject<int>? notifyCount,
+  ReactValue<int>? notifyCount,
   Map<K, V>? map,
 ]) {
   final reactMap = (map ?? {}).rx;
@@ -25,7 +25,7 @@ ReactMap<K, V> createTestMap<K, V>([
 }
 
 ReactList<T> createTestList<T>([
-  ReactObject<int>? notifyCount,
+  ReactValue<int>? notifyCount,
   List<T>? list,
 ]) {
   final reactList = (list ?? []).rx;

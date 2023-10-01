@@ -1,6 +1,6 @@
 part of '../../react_state.dart';
 
-class ReactList<T> extends ReactValue<List<T>> with ListMixin {
+class ReactList<T> extends ReactInterface<List<T>> with ListMixin {
   ReactList(List<T>? value) : super(value ?? []);
 
   @pragma("vm:prefer-inline")

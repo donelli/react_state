@@ -1,15 +1,14 @@
 part of '../../react_state.dart';
 
-abstract class ReactValue<T> extends StateChangeNotifier<T> {
-  ReactValue(T value) : _value = value;
+class ReactValue<T> extends ReactInterface<T> {
+  ReactValue(T value) : super(value);
 
-  // ignore: prefer_final_fields
-  T _value;
+  set value(T value) {
+    if (_value == value) {
+      return;
+    }
 
-  T get value {
-    StateManager.addRx(this);
-    return _value;
+    _value = value;
+    _notify(_value);
   }
-
-  T get valueWithoutSubscription => _value;
 }
