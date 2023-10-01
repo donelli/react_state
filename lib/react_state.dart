@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 part 'src/state_change_notifier.dart';
-part 'src/react_widget.dart';
+part 'src/widgets/react.dart';
 part 'src/state_manager.dart';
 part 'src/react_value/react_interface.dart';
 part 'src/react_value_extensions.dart';

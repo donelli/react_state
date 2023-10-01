@@ -1,4 +1,4 @@
-part of '../react_state.dart';
+part of '../../react_state.dart';
 
 class React extends StatefulWidget {
   const React(
