@@ -1,7 +1,7 @@
 part of '../../react_state.dart';
 
 class ReactList<T> extends ReactInterface<List<T>> with ListMixin {
-  ReactList(List<T>? value) : super(value ?? []);
+  ReactList([List<T>? value]) : super(value ?? []);
 
   @pragma("vm:prefer-inline")
   void batch(void Function(List<T> list) callback) {
