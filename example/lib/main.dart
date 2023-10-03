@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Divider(),
             const _ComplexComputeExample(),
             const Divider(),
-            const _DebouncedExample(),
+            _DebouncedExample(),
           ],
         ),
       ),
@@ -197,16 +197,11 @@ class __ComplexComputeExampleState extends State<_ComplexComputeExample> {
   }
 }
 
-class _DebouncedExample extends StatefulWidget {
-  const _DebouncedExample();
-
-  @override
-  State<_DebouncedExample> createState() => _DebouncedExampleState();
-}
-
-class _DebouncedExampleState extends State<_DebouncedExample> {
+class _DebouncedExample extends ReactStateful {
   final text = ''.rxDebounced(const Duration(milliseconds: 400));
   final renders = 0.rx;
+
+  final value = 1.rxNull;
 
   @override
   Widget build(BuildContext context) {
