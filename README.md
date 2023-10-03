@@ -1,39 +1,120 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+# React (state)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+React is a state management system build for Flutter. This package was heavily inspired by Getx, but with lots of improvements and new features.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+The main focus are simplicity, performance and the best development experience.
+
+## Getting stated
+
+Just install the package using `pub.dev`
+
+```sh
+flutter pub add react_state
+```
+
+And you are ready to go.
+
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Just like Getx, variables needs to be declared as Reactive, and there is two ways to do that, using the powerful extensions provided by the package or using the classes directly.
 
-## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+#### Classes
 
 ```dart
-const like = 'sample';
+import 'package:react_state/react_state.dart'
+
+final string = ReactValue('');
+final nullableNumber = ReactValue<int?>(null);
+final map = ReactMap<String, int>();
+final list = ReactList<String>();
+final classValue = ReactValue<ClassA>(ClassA());
 ```
 
-## Additional information
+#### Extensions (recommended)
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+import 'package:react_state/react_state.dart'
+
+final string = ''.rx;
+final nullableNumber = null.rx<int>;
+final map = <String, int>{}.rx;
+final list = <String>[].rx;
+final classValue = ClassA().rx;
+```
+
+Here is a list of extensions that exists:
+
+```dart
+// The `rx` extension exists for all Objects and created a ReactValue<T>.
+final value = 'Edu'.rx;
+
+// For null the `rx` extension exists too, but it behaves a little differently.
+// It requires a type and create a ReactValue<T?> with null as the initial value.
+final nullableValue = null.rx<int>()
+
+// Similar for the example above, the `rxNull` extension creates a ReactValue<T?>
+// with the provided value as initial value.
+final value = 1.rxNull;
+
+// Using the `rx` extension on a List will create a ReactList<T>.
+// Which is a basically a ReactValue with lots of helper functions that are
+// optimized to avoid rebuilds and work better with the reactivity system.
+final list = <String>[].rx;
+
+// The same goes for Maps, using the `rx` extension will create a ReactMap<K, V>.
+final map = <String, int>{}.rx;
+```
+
+#### Accessing / updating values
+
+To get or update the value the `value` getter/setter should be used.
+
+```dart
+final value = search.value;
+search.value = 'Updated value';
+```
+
+#### React widget
+
+The `React` widget is similar to the `Obx` widget of `GetX`. It detects which Reactive values are used inside the function and subscribes to it changes, rebuilding the widget when a value changes.
+
+```dart
+final number = 0.rx;
+
+// This function is called every time that `number` changes.
+React(() {
+  return Text(number.value.toString());
+});
+```
+
+
+## Example
+
+```dart
+class Counter extends ReactStateful {
+  Counter({super.key});
+
+  final counter = 0.rx;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        React(() {
+          return Text(counter.value.toString());
+        }),
+        const SizedBox(height: 12),
+        ElevatedButton(
+          onPressed: () {
+            counter.value++;
+          },
+          child: const Text('Increment'),
+        ),
+      ],
+    );
+  }
+}
+```
