@@ -14,9 +14,9 @@ class ComputedValue<T> extends ReactUnmodifiableObject<T> {
     bool immediate = false,
   }) {
     final listener = _SimpleReactiveListener();
-    StateManager.states.add(listener);
+    ReactStateManager.states.add(listener);
     final initialValue = computeFunction();
-    StateManager.states.removeLast();
+    ReactStateManager.states.removeLast();
 
     final state = ComputedValue._(
       computeFunction: computeFunction,
@@ -47,9 +47,9 @@ class ComputedValue<T> extends ReactUnmodifiableObject<T> {
   }
 
   void _calculate() {
-    StateManager.states.add(_IgnoreReactiveListener());
+    ReactStateManager.states.add(_IgnoreReactiveListener());
     final newValue = computeFunction();
-    StateManager.states.removeLast();
+    ReactStateManager.states.removeLast();
     isComputeScheduled = false;
 
     if (_value == newValue) {
@@ -73,7 +73,7 @@ class ComputedValue<T> extends ReactUnmodifiableObject<T> {
   bool isComputeScheduled = false;
 }
 
-class _SimpleReactiveListener extends ReactiveListener {
+class _SimpleReactiveListener extends ReactReactiveListener {
   _SimpleReactiveListener();
 
   final values = <ReactInterface<dynamic>>[];
@@ -84,7 +84,7 @@ class _SimpleReactiveListener extends ReactiveListener {
   }
 }
 
-class _IgnoreReactiveListener extends ReactiveListener {
+class _IgnoreReactiveListener extends ReactReactiveListener {
   @override
   void addRx<T>(ReactInterface<T> rx) {}
 }

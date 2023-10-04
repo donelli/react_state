@@ -12,7 +12,7 @@ void main() {
 
   void setupListener<T>() {
     testListener = TestReactiveListener<T>();
-    StateManager.states.add(testListener);
+    ReactStateManager.states.add(testListener);
   }
 
   test('Should correctly handle ReactObject of Strings', () {

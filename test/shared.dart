@@ -1,6 +1,6 @@
 import 'package:react_state/react_state.dart';
 
-class TestReactiveListener<U> extends ReactiveListener {
+class TestReactiveListener<U> extends ReactReactiveListener {
   int listenersCount = 0;
 
   @override

@@ -5,8 +5,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-part 'src/state_change_notifier.dart';
-part 'src/state_manager.dart';
+part 'src/react_state_change_notifier.dart';
+part 'src/react_state_manager.dart';
 part 'src/react_computed.dart';
 part 'src/react_value_extensions.dart';
 

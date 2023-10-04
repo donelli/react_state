@@ -6,7 +6,7 @@ import '../shared.dart';
 void main() {
   test('Should computed values work with one ', () {
     final testListener = TestReactiveListener<bool>();
-    StateManager.states.add(testListener);
+    ReactStateManager.states.add(testListener);
     final notifyCount = 0.rx;
 
     final text = ''.rx;
@@ -44,7 +44,7 @@ void main() {
 
   test('Should computed values batch changes and only recompute once', () {
     final testListener = TestReactiveListener<double>();
-    StateManager.states.add(testListener);
+    ReactStateManager.states.add(testListener);
     final notifyCount = 0.rx;
 
     final number1 = 12.rx;

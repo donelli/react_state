@@ -1,6 +1,6 @@
 part of '../react_state.dart';
 
-class StateChangeNotifier<T> {
+class ReactStateChangeNotifier<T> {
   void _notify(T value) {
     for (final callback in _callbacks.keys) {
       callback(value);
