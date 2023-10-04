@@ -12,12 +12,12 @@ class React extends StatefulWidget {
     T Function() computeFunction, {
     bool immediate = false,
   }) {
-    ReactStateManager.allowReactiveValueStack.add(true);
+    ReactStateManager.instance._onComputedDeclareStart();
     final value = ComputedValue<T>.create(
       computeFunction: computeFunction,
       immediate: immediate,
     );
-    ReactStateManager.allowReactiveValueStack.removeLast();
+    ReactStateManager.instance._onComputedDeclareEnd();
 
     return value;
   }
@@ -75,17 +75,10 @@ class _ReactState extends State<React> implements ReactReactiveListener {
     // FIXME: for now, this is executed every time, and it should.
     // But we can make this smarter and don't remove listeners if nothing has changed!
     _removeListeners();
-    ReactStateManager.states.add(this);
-    ReactStateManager.allowReactiveValueStack.add(false);
 
+    ReactStateManager.instance._onReactWidgetBuildStart(this);
     final component = widget.builder();
-
-    if (ReactStateManager.states.last == this) {
-      ReactStateManager.states.removeLast();
-      ReactStateManager.allowReactiveValueStack.removeLast();
-    } else {
-      assert(false, 'Reactive widget must be the last widget in the tree');
-    }
+    ReactStateManager.instance._onReactWidgetBuildStartEnd();
 
     return component;
   }

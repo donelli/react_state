@@ -5,7 +5,7 @@ import '../shared.dart';
 
 void main() {
   final testListener = TestReactiveListener<Map<String, int>>();
-  ReactStateManager.states.add(testListener);
+  ReactStateManager.instance.addListener(testListener);
 
   tearDown(() {
     testListener.listenersCount = 0;

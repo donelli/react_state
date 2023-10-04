@@ -14,11 +14,9 @@ class ComputedValue<T> extends ReactUnmodifiableObject<T> {
     bool immediate = false,
   }) {
     final listener = _SimpleReactiveListener();
-    ReactStateManager.states.add(listener);
-    ReactStateManager.allowReactiveValueStack.add(false);
+    ReactStateManager.instance._onComputedCalculateStart(listener);
     final initialValue = computeFunction();
-    ReactStateManager.allowReactiveValueStack.removeLast();
-    ReactStateManager.states.removeLast();
+    ReactStateManager.instance._onComputedCalculateEnd();
 
     final state = ComputedValue._(
       computeFunction: computeFunction,
@@ -49,11 +47,12 @@ class ComputedValue<T> extends ReactUnmodifiableObject<T> {
   }
 
   void _calculate() {
-    ReactStateManager.states.add(_IgnoreReactiveListener());
-    ReactStateManager.allowReactiveValueStack.add(false);
+    ReactStateManager.instance._onComputedCalculateStart(
+      _IgnoreReactiveListener(),
+    );
     final newValue = computeFunction();
-    ReactStateManager.allowReactiveValueStack.removeLast();
-    ReactStateManager.states.removeLast();
+    ReactStateManager.instance._onComputedCalculateEnd();
+
     isComputeScheduled = false;
 
     if (_value == newValue) {
