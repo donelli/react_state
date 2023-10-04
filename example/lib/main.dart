@@ -201,7 +201,11 @@ class _DebouncedExample extends ReactStateful {
   final text = ''.rxDebounced(const Duration(milliseconds: 400));
   final renders = 0.rx;
 
-  final value = 1.rxNull;
+  final computeRuns = 0.rx;
+  late final length = React.computed(() {
+    Future.delayed(const Duration(milliseconds: 10), () => computeRuns.value++);
+    return text.value.length;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -226,6 +230,12 @@ class _DebouncedExample extends ReactStateful {
         React(() {
           final renders = this.renders.value;
           return Text('(Renders: $renders)');
+        }),
+        React(() {
+          final length = this.length.value;
+          final computeRuns = this.computeRuns.value;
+
+          return Text('(computed length: $length - runs: $computeRuns )');
         }),
       ],
     );
