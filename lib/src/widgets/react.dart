@@ -53,6 +53,12 @@ class _ReactState extends State<React> implements ReactiveListener {
     super.deactivate();
   }
 
+  @override
+  void reassemble() {
+    _removeListeners();
+    super.reassemble();
+  }
+
   void _removeListeners() {
     for (final rx in _values.keys) {
       rx.removeListener(_refresh);
