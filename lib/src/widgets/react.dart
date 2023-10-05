@@ -59,7 +59,7 @@ class _ReactState extends State<React> implements ReactReactiveListener {
 
   @override
   void reassemble() {
-    _removeListeners();
+    _values.clear();
     super.reassemble();
   }
 
