@@ -60,7 +60,7 @@ class ComputedValue<T> extends ReactUnmodifiableObject<T> {
     }
 
     _value = newValue;
-    _notify(newValue);
+    notify();
   }
 
   void _dispose() {

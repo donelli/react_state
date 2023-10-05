@@ -14,7 +14,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     }
 
     _value[key] = value;
-    _notify(_value);
+    notify();
   }
 
   @override
@@ -24,7 +24,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     }
 
     _value.clear();
-    _notify(_value);
+    notify();
   }
 
   @pragma("vm:prefer-inline")
@@ -37,7 +37,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     }
 
     _value = value;
-    _notify(_value);
+    notify();
   }
 
   @override
@@ -45,7 +45,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     final removedValue = _value.remove(key);
 
     if (removedValue != null) {
-      _notify(_value);
+      notify();
     }
 
     return removedValue;
@@ -65,7 +65,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     });
 
     if (hasChanged) {
-      _notify(_value);
+      notify();
     }
   }
 
@@ -85,7 +85,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     }
 
     if (hasChanged) {
-      _notify(_value);
+      notify();
     }
   }
 
@@ -118,7 +118,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     }
 
     if (hasChanged) {
-      _notify(_value);
+      notify();
     }
   }
 
@@ -133,7 +133,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
     }
 
     if (keysToRemove.isNotEmpty) {
-      _notify(_value);
+      notify();
     }
   }
 
@@ -144,7 +144,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
 
       if (_value[key] != updatedValue) {
         _value[key] = updatedValue;
-        _notify(_value);
+        notify();
       }
 
       return updatedValue;
@@ -154,7 +154,7 @@ class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
       final newValue = ifAbsent();
 
       _value[key] = newValue;
-      _notify(_value);
+      notify();
 
       return newValue;
     }

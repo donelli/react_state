@@ -17,7 +17,7 @@ class ReactValueDebounced<T> extends ReactRef<T> {
 
   void _updatedValueAndDisposeTimer() {
     _value = _debouncedValue as T;
-    _notify(_value);
+    notify();
     _timer!.cancel();
     _timer = null;
     _debouncedValue = null;

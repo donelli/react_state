@@ -9,6 +9,6 @@ class ReactRef<T> extends ReactInterface<T> {
     }
 
     _value = value;
-    _notify(_value);
+    notify();
   }
 }

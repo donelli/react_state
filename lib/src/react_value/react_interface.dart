@@ -24,4 +24,9 @@ abstract class ReactInterface<T> extends ReactStateChangeNotifier<T> {
 
   @pragma('vm:prefer-inline')
   T get valueWithoutSubscription => _value;
+
+  @pragma('vm:prefer-inline')
+  void notify() {
+    _notify(_value);
+  }
 }
