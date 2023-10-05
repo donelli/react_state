@@ -1,7 +1,7 @@
 part of '../../react_state.dart';
 
 extension ReactValueDebouncedExtension<T> on T {
-  ReactValueDebounced<T> rxDebounced({
+  ReactValueDebounced<T> debouncedRef({
     int? milliseconds,
     int? seconds,
   }) {

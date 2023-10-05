@@ -38,34 +38,34 @@ final classValue = ReactValue<ClassA>(ClassA());
 ```dart
 import 'package:react_state/react_state.dart'
 
-final string = ''.rx;
-final nullableNumber = null.rx<int>;
-final map = <String, int>{}.rx;
-final list = <String>[].rx;
-final classValue = ClassA().rx;
+final string = ''.ref;
+final nullableNumber = null.ref<int>;
+final map = <String, int>{}.ref;
+final list = <String>[].ref;
+final classValue = ClassA().ref;
 ```
 
 Here is a list of extensions that exists:
 
 ```dart
-// The `rx` extension exists for all Objects and created a ReactValue<T>.
-final value = 'Edu'.rx;
+// The `ref` extension exists for all Objects and created a ReactValue<T>.
+final value = 'Edu'.ref;
 
-// For null the `rx` extension exists too, but it behaves a little differently.
+// For null the `ref` extension exists too, but it behaves a little differently.
 // It requires a type and create a ReactValue<T?> with null as the initial value.
-final nullableValue = null.rx<int>()
+final nullableValue = null.ref<int>()
 
-// Similar for the example above, the `rxNull` extension creates a ReactValue<T?>
+// Similar for the example above, the `nullRef` extension creates a ReactValue<T?>
 // with the provided value as initial value.
-final value = 1.rxNull;
+final value = 1.nullRef;
 
-// Using the `rx` extension on a List will create a ReactList<T>.
+// Using the `ref` extension on a List will create a ReactList<T>.
 // Which is a basically a ReactValue with lots of helper functions that are
 // optimized to avoid rebuilds and work better with the reactivity system.
-final list = <String>[].rx;
+final list = <String>[].ref;
 
-// The same goes for Maps, using the `rx` extension will create a ReactMap<K, V>.
-final map = <String, int>{}.rx;
+// The same goes for Maps, using the `ref` extension will create a ReactMap<K, V>.
+final map = <String, int>{}.ref;
 ```
 
 #### Accessing / updating values
@@ -82,7 +82,7 @@ search.value = 'Updated value';
 The `React` widget is similar to the `Obx` widget of `GetX`. It detects which Reactive values are used inside the function and subscribes to it changes, rebuilding the widget when a value changes.
 
 ```dart
-final number = 0.rx;
+final number = 0.ref;
 
 // This function is called every time that `number` changes.
 React(() {
@@ -97,7 +97,7 @@ React(() {
 class Counter extends ReactStateful {
   Counter({super.key});
 
-  final counter = 0.rx;
+  final counter = 0.ref;
 
   @override
   Widget build(BuildContext context) {

@@ -51,7 +51,7 @@ mixin ReactState {
   }
 
   @pragma('vm:prefer-inline')
-  ReactValue<T> ref<T extends Object>(T initialValue) {
-    return ReactValue(initialValue);
+  ReactRef<T> ref<T extends Object>(T initialValue) {
+    return ReactRef(initialValue);
   }
 }

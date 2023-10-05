@@ -82,12 +82,12 @@ class _SimpleReactiveListener extends ReactReactiveListener {
   final values = <ReactInterface<dynamic>>[];
 
   @override
-  void addRx<T>(ReactInterface<T> rx) {
-    values.add(rx);
+  void addRef<T>(ReactInterface<T> ref) {
+    values.add(ref);
   }
 }
 
 class _IgnoreReactiveListener extends ReactReactiveListener {
   @override
-  void addRx<T>(ReactInterface<T> rx) {}
+  void addRef<T>(ReactInterface<T> ref) {}
 }

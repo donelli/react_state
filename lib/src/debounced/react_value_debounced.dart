@@ -1,6 +1,6 @@
 part of '../../react_state.dart';
 
-class ReactValueDebounced<T> extends ReactValue<T> {
+class ReactValueDebounced<T> extends ReactRef<T> {
   ReactValueDebounced(T value, this.duration) : super(value);
 
   Timer? _timer;

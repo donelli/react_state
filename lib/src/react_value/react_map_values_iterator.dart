@@ -1,7 +1,7 @@
 part of '../../react_state.dart';
 
 class _ReactMapValuesIterable<K, V> extends Iterable<V> {
-  final ReactMap<K, V> _map;
+  final ReactMapRef<K, V> _map;
   _ReactMapValuesIterable(this._map);
 
   @override
@@ -28,10 +28,10 @@ class _ReactMapValuesIterable<K, V> extends Iterable<V> {
 
 class _ReactMapValuesIterator<K, V> implements Iterator<V> {
   final Iterator<K> _keys;
-  final ReactMap<K, V> _map;
+  final ReactMapRef<K, V> _map;
   V? _current;
 
-  _ReactMapValuesIterator(ReactMap<K, V> map)
+  _ReactMapValuesIterator(ReactMapRef<K, V> map)
       : _map = map,
         _keys = map.keys.iterator;
 

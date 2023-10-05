@@ -12,7 +12,7 @@ abstract class ReactInterface<T> extends ReactStateChangeNotifier<T> {
   T _value;
 
   T get value {
-    ReactStateManager.instance.addRx(this);
+    ReactStateManager.instance.addRefListener(this);
     return _value;
   }
 

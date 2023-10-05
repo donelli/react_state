@@ -18,7 +18,7 @@ void main() {
   test('Should correctly handle ReactObject of Strings', () {
     setupListener<String>();
     var notifyCount = 0;
-    final value = 'Test'.rx;
+    final value = 'Test'.ref;
     value.addListener((_) => notifyCount++);
 
     expect(value.value, 'Test');
@@ -34,7 +34,7 @@ void main() {
   test('Should correctly handle ReactObject of bool', () {
     setupListener<bool>();
     var notifyCount = 0;
-    final value = false.rx;
+    final value = false.ref;
     value.addListener((_) => notifyCount++);
 
     expect(value.value, false);
@@ -50,7 +50,7 @@ void main() {
   test('Should correctly handle ReactObject of int', () {
     setupListener<int>();
     var notifyCount = 0;
-    final value = 123.rx;
+    final value = 123.ref;
     value.addListener((_) => notifyCount++);
 
     expect(value.value, 123);
@@ -67,7 +67,7 @@ void main() {
     setupListener<num>();
     var notifyCount = 0;
     // ignore: unnecessary_cast
-    final value = (44 as num).rx;
+    final value = (44 as num).ref;
     value.addListener((_) => notifyCount++);
 
     expect(value.value, 44);
@@ -83,7 +83,7 @@ void main() {
   test('Should correctly handle ReactObject of double', () {
     setupListener<double>();
     var notifyCount = 0;
-    final value = (55.42).rx;
+    final value = (55.42).ref;
     value.addListener((_) => notifyCount++);
 
     expect(value.value, 55.42);
@@ -99,7 +99,7 @@ void main() {
   test('Should correctly handle ReactObject of double', () {
     setupListener<TestEnum>();
     var notifyCount = 0;
-    final value = TestEnum.two.rx;
+    final value = TestEnum.two.ref;
     value.addListener((_) => notifyCount++);
 
     expect(value.value, TestEnum.two);
@@ -116,7 +116,7 @@ void main() {
     setupListener<ClassA>();
     var notifyCount = 0;
     final originalClass = ClassA('Edu');
-    final value = originalClass.rx;
+    final value = originalClass.ref;
     value.addListener((_) => notifyCount++);
 
     value.value.name = 'Edu2';

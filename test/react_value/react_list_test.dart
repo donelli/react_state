@@ -12,7 +12,7 @@ void main() {
   });
 
   test('Should ReactList.length works', () {
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
     expect(reactList.length, 3);
@@ -21,7 +21,7 @@ void main() {
   });
 
   test('Should ReactList assignment work', () {
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
     reactList[0] = 22;
@@ -35,7 +35,7 @@ void main() {
   test(
     "Should ReactList assignment work and don't notify if value is the same",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
       reactList[1] = 2;
@@ -48,7 +48,7 @@ void main() {
   );
 
   test("Should ReactList.[] work and add this Value to listeners", () {
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
     final value = reactList[1];
@@ -59,7 +59,7 @@ void main() {
   });
 
   test("Should ReactList.batch work and only notify once", () {
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
     reactList.batch((list) {
@@ -74,7 +74,7 @@ void main() {
   });
 
   test("Should ReactList.first work and subscribe to listeners", () {
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
     final firstItem = reactList.first;
@@ -87,7 +87,7 @@ void main() {
   test(
     "Should ReactList.firstOrNull work and subscribe to listeners if there is elements",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
       final firstItem = reactList.firstOrNull;
@@ -101,7 +101,7 @@ void main() {
   test(
     "Should ReactList.firstOrNull work and subscribe to listeners if there isn't a element",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
 
       final firstItem = reactList.firstOrNull;
@@ -115,7 +115,7 @@ void main() {
   test(
     "Should ReactList.isEmpty work and subscribe to listeners",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
 
       final isEmpty = reactList.isEmpty;
@@ -129,7 +129,7 @@ void main() {
   test(
     "Should ReactList.isNotEmpty work and subscribe to listeners",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [1]);
 
       final isNotEmpty = reactList.isNotEmpty;
@@ -141,7 +141,7 @@ void main() {
   );
 
   test("Should ReactList.last work and subscribe to listeners", () {
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
     final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
     final lastItem = reactList.last;
@@ -154,7 +154,7 @@ void main() {
   test(
     "Should ReactList.lastOrNull work and subscribe to listeners if there is elements",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
 
       final firstItem = reactList.lastOrNull;
@@ -168,7 +168,7 @@ void main() {
   test(
     "Should ReactList.lastOrNull work and subscribe to listeners if there isn't a element",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
 
       final firstItem = reactList.lastOrNull;
@@ -182,7 +182,7 @@ void main() {
   test(
     "Should ReactList.single work and subscribe to listeners",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [2]);
 
       final singleItem = reactList.single;
@@ -196,7 +196,7 @@ void main() {
   test(
     "Should ReactList.single throws if there is more then one element",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [2, 2]);
 
       expect(() => reactList.single, throwsA(isA<StateError>()));
@@ -209,7 +209,7 @@ void main() {
   test(
     "Should ReactList.single throws if there is no element",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
 
       expect(() => reactList.single, throwsA(isA<StateError>()));
@@ -222,7 +222,7 @@ void main() {
   test(
     "Should ReactList.add work and notify listeners",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
 
       reactList.add(1);
@@ -237,7 +237,7 @@ void main() {
   test(
     "Should ReactList.addAll work and notify listeners only once",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
       final otherList = [2, 4, 6, 8, 10];
 
@@ -252,7 +252,7 @@ void main() {
   test(
     "Should't ReactList.addAll notify listeners if iterable is empty",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
 
       reactList.addAll([]);
@@ -266,7 +266,7 @@ void main() {
   test(
     "Should ReactList.clear work and notify listeners only once",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [1, 2]);
 
       reactList.clear();
@@ -280,7 +280,7 @@ void main() {
   test(
     "Should't ReactList.clear notify listeners if it's already empty",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount);
 
       reactList.clear();
@@ -294,7 +294,7 @@ void main() {
   test(
     "Should ReactList.any work and subscribe to listeners",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [1, 2, 3, 4]);
 
       final hasThree = reactList.any((value) => value == 3);
@@ -308,7 +308,7 @@ void main() {
   test(
     "Should ReactList.any work and subscribe to listeners even if element is not founded",
     () {
-      final notifyCount = 0.rx;
+      final notifyCount = 0.ref;
       final reactList = createTestList<int>(notifyCount, [1, 2, 3, 4]);
 
       final hasThree = reactList.any((value) => value == 9);

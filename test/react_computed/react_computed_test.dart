@@ -7,9 +7,9 @@ void main() {
   test('Should computed values work with one ', () {
     final testListener = TestReactiveListener<bool>();
     ReactStateManager.instance.addListener(testListener);
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
 
-    final text = ''.rx;
+    final text = ''.ref;
     final isNumber = React.computed(() {
       return num.tryParse(text.value) != null;
     }, immediate: true);
@@ -45,11 +45,11 @@ void main() {
   test('Should computed values batch changes and only recompute once', () {
     final testListener = TestReactiveListener<double>();
     ReactStateManager.instance.addListener(testListener);
-    final notifyCount = 0.rx;
+    final notifyCount = 0.ref;
 
-    final number1 = 12.rx;
-    final number2 = 24.rx;
-    final number3 = 36.rx;
+    final number1 = 12.ref;
+    final number2 = 24.ref;
+    final number3 = 36.ref;
 
     final sum = React.computed(() {
       return (number1.value + number2.value + number3.value).toDouble();

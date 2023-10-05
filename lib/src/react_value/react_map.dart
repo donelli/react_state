@@ -1,7 +1,7 @@
 part of '../../react_state.dart';
 
-class ReactMap<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
-  ReactMap([Map<K, V>? value]) : super(value ?? {});
+class ReactMapRef<K, V> extends ReactInterface<Map<K, V>> with MapMixin<K, V> {
+  ReactMapRef([Map<K, V>? value]) : super(value ?? {});
 
   @pragma("vm:prefer-inline")
   @override

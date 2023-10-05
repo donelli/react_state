@@ -35,16 +35,16 @@ class React extends StatefulWidget {
 }
 
 class _ReactState extends State<React> implements ReactReactiveListener {
-  final _values = <ReactInterface<dynamic>, void>{};
+  final _refs = <ReactInterface<dynamic>, void>{};
 
   @override
-  void addRx<T>(ReactInterface<T> rx) {
-    if (_values.containsKey(rx)) {
+  void addRef<T>(ReactInterface<T> ref) {
+    if (_refs.containsKey(ref)) {
       return;
     }
 
-    rx.addListener(_refresh);
-    _values[rx] = null;
+    ref.addListener(_refresh);
+    _refs[ref] = null;
   }
 
   void _refresh<T>(T _) {
@@ -59,15 +59,15 @@ class _ReactState extends State<React> implements ReactReactiveListener {
 
   @override
   void reassemble() {
-    _values.clear();
+    _refs.clear();
     super.reassemble();
   }
 
   void _removeListeners() {
-    for (final rx in _values.keys) {
-      rx.removeListener(_refresh);
+    for (final ref in _refs.keys) {
+      ref.removeListener(_refresh);
     }
-    _values.clear();
+    _refs.clear();
   }
 
   @override
