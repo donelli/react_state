@@ -23,3 +23,5 @@ part 'src/debounced/extensions.dart';
 
 part 'src/widgets/react.dart';
 part 'src/widgets/react_stateful.dart';
+
+part 'src/mixins/react_state.dart';

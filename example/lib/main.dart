@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:react_state/react_state.dart';
 
@@ -72,6 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const _ComplexComputeExample(),
             const Divider(),
             _DebouncedExample(),
+            const Divider(),
+            const _WithController(),
           ],
         ),
       ),
@@ -198,14 +202,28 @@ class __ComplexComputeExampleState extends State<_ComplexComputeExample> {
 }
 
 class _DebouncedExample extends ReactStateful {
-  final text = ''.rxDebounced(const Duration(milliseconds: 400));
+  final text = ''.rxDebounced(milliseconds: 400);
   final renders = 0.rx;
 
   final computeRuns = 0.rx;
-  late final length = React.computed(() {
+  late final length = computed(() {
     Future.delayed(const Duration(milliseconds: 10), () => computeRuns.value++);
     return text.value.length;
   });
+
+  @override
+  void initState() {
+    watch([text, renders], _onChangedTextOrLength);
+    watchOne(length, _onLengthChanged);
+  }
+
+  void _onLengthChanged(int length) {
+    print('Length changed!');
+  }
+
+  void _onChangedTextOrLength() {
+    print('Text or length changed!');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -237,6 +255,73 @@ class _DebouncedExample extends ReactStateful {
 
           return Text('(computed length: $length - runs: $computeRuns )');
         }),
+      ],
+    );
+  }
+}
+
+class Controller with ReactState {
+  final count = 0.rx;
+  final color = Colors.black.rx;
+
+  late final squared = computed(() {
+    return count.value * count.value;
+  });
+
+  void onInit() {
+    watchOne(count, _onCountChanged);
+  }
+
+  void _onCountChanged(int value) {
+    color.value = Color(
+      ((value * 0.05 / 1) * 0xFFFFFF).toInt(),
+    ).withOpacity(1.0);
+  }
+}
+
+class _WithController extends StatefulWidget {
+  const _WithController();
+
+  @override
+  State<_WithController> createState() => _WithControllerState();
+}
+
+class _WithControllerState extends State<_WithController> {
+  final controller = Controller();
+
+  @override
+  void initState() {
+    controller.onInit();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        React(() {
+          return Text(
+            controller.count.value.toString(),
+            style: TextStyle(
+              color: controller.color.value,
+            ),
+          );
+        }),
+        const SizedBox(width: 8),
+        React(() {
+          return Text(' (squared: ${controller.squared.value})');
+        }),
+        const SizedBox(width: 12),
+        ElevatedButton(
+          onPressed: () => controller.count.value++,
+          child: const Text('Increment'),
+        ),
       ],
     );
   }
