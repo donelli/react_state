@@ -1,6 +1,6 @@
 part of '../../react_state.dart';
 
-class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin {
+class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
   ReactListRef([List<T>? value]) : super(value ?? []);
 
   @pragma("vm:prefer-inline")
@@ -48,8 +48,8 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin {
 
   @override
   T get first {
-    if (length == 0) _IterableElementError.noElement();
-    return _value[0];
+    _addRefToListeners();
+    return _value.first;
   }
 
   T? get firstOrNull {
@@ -59,8 +59,8 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin {
 
   @override
   T get last {
-    if (length == 0) _IterableElementError.noElement();
-    return _value[_value.length - 1];
+    _addRefToListeners();
+    return _value.last;
   }
 
   T? get lastOrNull {
@@ -70,9 +70,8 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin {
 
   @override
   T get single {
-    if (length == 0) throw _IterableElementError.noElement();
-    if (_value.length > 1) throw _IterableElementError.tooMany();
-    return _value[0];
+    _addRefToListeners();
+    return _value.single;
   }
 
   @override
@@ -82,31 +81,20 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin {
   }
 
   @override
-  void addAll(Iterable<dynamic> iterable) {
-    int i = _value.length;
-    final initialLength = i;
+  void addAll(Iterable<T> iterable) {
+    final initialLength = _value.length;
 
-    for (final element in iterable) {
-      assert(_value.length == i || (throw ConcurrentModificationError(this)));
-      _value.add(element);
-      i++;
-    }
+    _value.addAll(iterable);
 
-    if (i != initialLength) {
+    if (_value.length != initialLength) {
       _notify(_value);
     }
   }
 
   @override
   bool any(bool Function(T element) test) {
-    int length = this.length;
-    for (int i = 0; i < length; i++) {
-      if (test(_value[i])) return true;
-      if (length != _value.length) {
-        throw ConcurrentModificationError(this);
-      }
-    }
-    return false;
+    _addRefToListeners();
+    return _value.any(test);
   }
 
   void assign(T item) {
@@ -129,17 +117,4 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin {
     _value[index] = newValue;
     _notify(_value);
   }
-}
-
-abstract class _IterableElementError {
-  const _IterableElementError._();
-
-  /// Error thrown thrown by, e.g., [Iterable.first] when there is no result.
-  static StateError noElement() => StateError("No element");
-
-  /// Error thrown by, e.g., [Iterable.single] if there are too many results.
-  static StateError tooMany() => StateError("Too many elements");
-
-  /// Error thrown by, e.g., [List.setRange] if there are too few elements.
-  // static StateError tooFew() => StateError("Too few elements");
 }

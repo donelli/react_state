@@ -11,10 +11,17 @@ abstract class ReactInterface<T> extends ReactStateChangeNotifier<T> {
   // ignore: prefer_final_fields
   T _value;
 
+  @pragma('vm:prefer-inline')
   T get value {
-    ReactStateManager.instance.addRefListener(this);
+    _addRefToListeners();
     return _value;
   }
 
+  @pragma('vm:prefer-inline')
+  void _addRefToListeners() {
+    ReactStateManager.instance.addRefListener(this);
+  }
+
+  @pragma('vm:prefer-inline')
   T get valueWithoutSubscription => _value;
 }
