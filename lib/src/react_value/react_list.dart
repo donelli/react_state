@@ -6,7 +6,7 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
   @pragma("vm:prefer-inline")
   void batch(void Function(List<T> list) callback) {
     callback(_value);
-    _notify(_value);
+    notify();
   }
 
   @pragma("vm:prefer-inline")
@@ -20,7 +20,7 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
     }
 
     _value.length = len;
-    _notify(_value);
+    notify();
   }
 
   @pragma("vm:prefer-inline")
@@ -34,7 +34,7 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
     }
 
     _value[index] = value;
-    _notify(_value);
+    notify();
   }
 
   set value(List<T> value) {
@@ -43,7 +43,7 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
     }
 
     _value = value;
-    _notify(_value);
+    notify();
   }
 
   @override
@@ -77,18 +77,14 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
   @override
   void add(dynamic element) {
     _value.add(element);
-    _notify(_value);
+    notify();
   }
 
   @override
   void addAll(Iterable<T> iterable) {
-    final initialLength = _value.length;
-
-    _value.addAll(iterable);
-
-    if (_value.length != initialLength) {
-      _notify(_value);
-    }
+    return runAndNotifyIfLengthChanged(
+      () => _value.addAll(iterable),
+    );
   }
 
   @override
@@ -100,7 +96,7 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
   void assign(T item) {
     _value.clear();
     _value.add(item);
-    _notify(_value);
+    notify();
   }
 
   void assignAll(Iterable<T> items) {
@@ -115,6 +111,60 @@ class ReactListRef<T> extends ReactInterface<List<T>> with ListMixin<T> {
     }
 
     _value[index] = newValue;
-    _notify(_value);
+    notify();
+  }
+
+  @override
+  T removeAt(int index) {
+    final removedItem = _value.removeAt(index);
+    notify();
+    return removedItem;
+  }
+
+  @override
+  bool remove(Object? element) {
+    final removed = _value.remove(element);
+
+    if (removed) {
+      notify();
+    }
+
+    return removed;
+  }
+
+  @override
+  T removeLast() {
+    final removedItem = _value.removeLast();
+    notify();
+    return removedItem;
+  }
+
+  @override
+  void removeRange(int start, int end) {
+    if (start == end) {
+      return;
+    }
+    _value.removeRange(start, end);
+    notify();
+  }
+
+  @override
+  void removeWhere(bool Function(T element) test) {
+    return runAndNotifyIfLengthChanged(
+      () => _value.removeWhere(test),
+    );
+  }
+
+  @pragma("vm:prefer-inline")
+  R runAndNotifyIfLengthChanged<R>(R Function() callback) {
+    final initialLength = _value.length;
+
+    final res = callback();
+
+    if (_value.length != initialLength) {
+      notify();
+    }
+
+    return res;
   }
 }

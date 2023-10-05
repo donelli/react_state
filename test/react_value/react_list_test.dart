@@ -319,6 +319,134 @@ void main() {
     },
   );
 
+  test(
+    "Should ReactList.removeAt work and notify listeners only once",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2]);
+
+      final removedItem = reactList.removeAt(0);
+
+      expect(notifyCount.value, 1);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 1);
+      expect(removedItem, 1);
+    },
+  );
+
+  test(
+    "Should ReactList.remove work and notify listeners only once",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2]);
+
+      final removedItem = reactList.remove(2);
+
+      expect(notifyCount.value, 1);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 1);
+      expect(removedItem, true);
+    },
+  );
+
+  test(
+    "Should ReactList.remove don't notify listeners if nothing changed",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2]);
+
+      final removedItem = reactList.remove(99);
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 2);
+      expect(removedItem, false);
+    },
+  );
+
+  test(
+    "Should ReactList.removeLast work and notify listeners only once",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2]);
+
+      final removedItem = reactList.removeLast();
+
+      expect(notifyCount.value, 1);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 1);
+      expect(removedItem, 2);
+    },
+  );
+
+  test(
+    "Should ReactList.removeLast thrown if list is empty",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount);
+
+      expect(() => reactList.removeLast(), throwsRangeError);
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 0);
+    },
+  );
+
+  test(
+    "Should ReactList.removeRange work and notify listeners only once",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
+
+      reactList.removeRange(0, 2);
+
+      expect(notifyCount.value, 1);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 1);
+    },
+  );
+
+  test(
+    "Should ReactList.removeRange don't notify if nothing will be removed",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
+
+      reactList.removeRange(1, 1);
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 3);
+    },
+  );
+
+  test(
+    "Should ReactList.removeWhere work and notify listeners only once",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
+
+      reactList.removeWhere((value) => value % 2 == 0);
+
+      expect(notifyCount.value, 1);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 2);
+    },
+  );
+
+  test(
+    "Should ReactList.removeWhere don't notify if nothing was removed",
+    () {
+      final notifyCount = 0.ref;
+      final reactList = createTestList<int>(notifyCount, [1, 2, 3]);
+
+      reactList.removeWhere((value) => false);
+
+      expect(notifyCount.value, 0);
+      expect(testListener.listenersCount, 0);
+      expect(reactList.length, 3);
+    },
+  );
+
   // TODO: list.iterator
   // TODO: list.reversed
   // TODO: list.value
@@ -344,11 +472,6 @@ void main() {
   // TODO: list.lastWhere((element) => false)
   // TODO: list.map((element) => null)
   // TODO: list.reduce((previousValue, element) => null)
-  // TODO: list.remove(element)
-  // TODO: list.removeAt(index)
-  // TODO: list.removeLast()
-  // TODO: list.removeRange(start, end)
-  // TODO: list.removeWhere((element) => false)
   // TODO: list.replaceRange(start, end, newContents)
   // TODO: list.retainWhere((element) => false)
   // TODO: list.setAll(index, iterable)
